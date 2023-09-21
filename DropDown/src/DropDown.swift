@@ -335,6 +335,15 @@ public final class DropDown: UIView {
 	}
 
     /**
+    The color of the text for each cells of the drop down.
+
+    Changing the text color automatically reloads the drop down.
+    */
+    @objc public dynamic var checkMarkColor: UIColor = .gray {
+        didSet { reloadAllComponents() }
+    }
+
+    /**
      The color of the text for selected cells of the drop down.
      
      Changing the text color automatically reloads the drop down.
@@ -549,6 +558,7 @@ private extension DropDown {
 
 		tableView.backgroundColor = tableViewBackgroundColor
 		tableView.separatorColor = separatorColor
+        tableView.separatorInset = .zero
 		tableView.layer.cornerRadius = cornerRadius
 		tableView.layer.masksToBounds = true
 	}
@@ -1084,7 +1094,8 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 		cell.selectedBackgroundColor = selectionBackgroundColor
         cell.highlightTextColor = selectedTextColor
         cell.normalTextColor = textColor
-		
+        cell.checkmarkColor = checkMarkColor
+        
 		if let cellConfiguration = cellConfiguration {
 			cell.optionLabel.text = cellConfiguration(index, dataSource[index])
 		} else {
