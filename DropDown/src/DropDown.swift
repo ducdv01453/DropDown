@@ -83,6 +83,8 @@ public final class DropDown: UIView {
 	//MARK: UI
 	fileprivate let dismissableView = UIView()
 	fileprivate let tableViewContainer = UIView()
+    fileprivate let blurEffectView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+
 	fileprivate let tableView = UITableView()
 	fileprivate var templateCell: DropDownCell!
     fileprivate lazy var arrowIndication: UIImageView = {
@@ -226,6 +228,7 @@ public final class DropDown: UIView {
 	*/
 	@objc public dynamic var cornerRadius = DPDConstant.UI.CornerRadius {
 		willSet {
+            blurEffectView.layer.cornerRadius = newValue
 			tableViewContainer.layer.cornerRadius = newValue
 			tableView.layer.cornerRadius = newValue
 		}
@@ -236,6 +239,7 @@ public final class DropDown: UIView {
 	Alias method for `cornerRadius` variable to avoid ambiguity.
 	*/
 	@objc public dynamic func setupCornerRadius(_ radius: CGFloat) {
+        blurEffectView.layer.cornerRadius = radius
 		tableViewContainer.layer.cornerRadius = radius
 		tableView.layer.cornerRadius = radius
 		reloadAllComponents()
@@ -607,10 +611,6 @@ extension DropDown {
 		dismissableView.translatesAutoresizingMaskIntoConstraints = false
 
 		addUniversalConstraints(format: "|[dismissableView]|", views: ["dismissableView": dismissableView])
-
-        // Add BlurEffect
-        let blurEffect = UIBlurEffect(style: .systemMaterial)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
         
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableViewContainer.addSubview(blurEffectView)
