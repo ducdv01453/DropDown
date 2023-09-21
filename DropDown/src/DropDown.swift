@@ -598,6 +598,12 @@ extension DropDown {
 
 		addUniversalConstraints(format: "|[dismissableView]|", views: ["dismissableView": dismissableView])
 
+        // Add BlurEffect
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableViewContainer.addSubview(blurEffectView)
 
 		// Table view container
 		addSubview(tableViewContainer)
@@ -749,7 +755,7 @@ extension DropDown {
 		let x = anchorViewX + topOffset.x
 		var y = (anchorViewMaxY + topOffset.y) - tableHeight
 
-		let windowY = window.bounds.minY + DPDConstant.UI.HeightPadding
+		let windowY = window.safeAreaInsets.top + DPDConstant.UI.HeightPadding
 
 		if y < windowY {
 			offscreenHeight = abs(y - windowY)
